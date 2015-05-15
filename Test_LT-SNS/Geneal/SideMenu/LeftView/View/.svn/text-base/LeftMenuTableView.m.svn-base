@@ -1,0 +1,117 @@
+//
+//  LeftMenuTableView.m
+//  Test_LT-SNS
+//
+//  Created by pactera on 15/4/10.
+//  Copyright (c) 2015年 Mark Lin. All rights reserved.
+//
+
+#import "LeftMenuTableView.h"
+#import "BaseViewController.h"
+#import "LeftMenuHeadView.h"
+#import "PersonalInfoViewController.h"
+
+@interface LeftMenuTableView () <UITableViewDataSource,UITableViewDelegate,leftMenuHeadViewDelegate>
+{
+    NSMutableArray *_nameArray;
+    LeftMenuHeadView *headView;
+}
+
+@end
+
+@implementation LeftMenuTableView
+
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
+{
+    self = [super initWithFrame:frame style:style];
+    
+    if (self) {
+        
+        //初始化数据
+        [self initData];
+        
+        //设置代理对象，数据源对象
+        self.delegate = self;
+        self.dataSource = self;
+    }
+    
+    return self;
+}
+
+#pragma mark 初始化数据
+- (void)initData
+{
+    _nameArray = [[NSMutableArray alloc] initWithObjects:
+                  @{@"IndexViewController":@"首页"},
+                  @{@"MessageViewController":@"消息"},
+                  @{@"CircleViewController":@"圈子"},
+                  @{@"RelationViewController":@"关系"},nil];
+    
+    headView = [[LeftMenuHeadView alloc] init];
+    headView.delegate = self;
+}
+
+#pragma mark
+- (void)goPersonInfo:(BaseViewController *)baseVC
+{
+    self.changeBlock(baseVC,YES);
+}
+
+#pragma mark UITableView数据源方法
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _nameArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"cellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.textLabel.text = [[[_nameArray objectAtIndex:indexPath.row] allValues] lastObject];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+#pragma mark UITableView代理方法
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return headView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 52;
+}
+
+#pragma mark 选中某个cell
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //利用反射生成对应的控制器以及设置标题
+    
+    BaseViewController *baseVC = [[NSClassFromString([[[_nameArray objectAtIndex:indexPath.row] allKeys] lastObject]) alloc] init];
+    
+    baseVC.homeView.navigationView.navigationTitle = [[[_nameArray objectAtIndex:indexPath.row] allObjects] lastObject];
+    
+    //block回调--通过LeftMenuViewController去修改首页控制器
+    self.changeBlock(baseVC,YES);
+    //取消cell选中状态
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [self hi]
+}
+
+
+@end

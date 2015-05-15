@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<dict>
+			<key>secondLevelControllerString</key>
+			<string>PersonalDataViewController</string>
+			<key>cellTitle</key>
+			<string>小文童鞋</string>
+			<key>cellAvatar</key>
+			<string>11111</string>
+			<key>settingsCellStyle</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>secondLevelControllerString</key>
+			<string>MyIDListViewController</string>
+			<key>cellTitle</key>
+			<string>我的所有身份</string>
+			<key>settingsCellStyle</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>cellTitle</key>
+			<string>位置共享</string>
+			<key>settingsCellStyle</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>cellTitle</key>
+			<string>账号保护</string>
+			<key>settingsCellStyle</key>
+			<integer>3</integer>
+			<key>secondLevelControllerString</key>
+			<string>ProtectionViewController</string>
+		</dict>
+		<dict>
+			<key>cellTitle</key>
+			<string>密码重置</string>
+			<key>settingsCellStyle</key>
+			<integer>3</integer>
+			<key>secondLevelControllerString</key>
+			<string>ResetPasswordViewController</string>
+		</dict>
+		<dict>
+			<key>phoneNumber</key>
+			<string></string>
+			<key>cellTitle</key>
+			<string>手机绑定</string>
+			<key>settingsCellStyle</key>
+			<integer>4</integer>
+		</dict>
+	</array>
+</array>
+</plist>
